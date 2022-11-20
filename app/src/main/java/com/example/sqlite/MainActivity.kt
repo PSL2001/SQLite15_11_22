@@ -43,8 +43,19 @@ class MainActivity : AppCompatActivity() {
         }
         val layoutManager = LinearLayoutManager(this)
         binding.rcAticulos.layoutManager = layoutManager
-        adapter = ArticulosAdapter(lista)
+        adapter = ArticulosAdapter(lista, {onItemDelete(it)})
         binding.rcAticulos.adapter = adapter
+    }
+
+    private fun onItemDelete(position: Int) {
+        val usuario = lista[position]
+        //Borramos de la lista
+        conexion.borrar(usuario.id)
+        lista.removeAt(position)
+        if (lista.size == 0) {
+            binding.tvVacio.visibility = View.VISIBLE
+        }
+        adapter.notifyItemRemoved(position)
     }
 
     override fun onResume() {

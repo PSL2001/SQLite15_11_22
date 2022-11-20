@@ -8,10 +8,13 @@ import com.example.sqlite.models.Articulo
 class ArticulosViewHolder(v: View): RecyclerView.ViewHolder(v) {
     private val binding = ArticleLayoutBinding.bind(v)
 
-    fun render(articulo: Articulo) {
+    fun render(articulo: Articulo, onItemDelete: (Int) -> Unit) {
         binding.tvNombre.text = articulo.nombre
         binding.tvPrecio.text = articulo.precio.toString()
         binding.tvStock.text = articulo.stock.toString()
+        binding.btnDelete.setOnClickListener {
+            onItemDelete(adapterPosition)
+        }
     }
 
 }

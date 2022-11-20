@@ -90,4 +90,11 @@ class BaseDatos(c: Context): SQLiteOpenHelper(c, DATABASE, null, VERSION) {
 
         return filas != 0
     }
+
+    fun borrar(id: Int) {
+        val q = "DELETE FROM $TABLE WHERE id = '$id'"
+        val conexion = this.writableDatabase
+        conexion.execSQL(q)
+        conexion.close()
+    }
 }
