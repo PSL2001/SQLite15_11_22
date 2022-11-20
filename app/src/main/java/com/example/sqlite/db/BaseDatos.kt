@@ -72,8 +72,14 @@ class BaseDatos(c: Context): SQLiteOpenHelper(c, DATABASE, null, VERSION) {
         return lista
     }
 
-    fun existeNombre(nom: String): Boolean {
-        val q = "SELECT id FROM $TABLE where nombre = '$nom'"
+    fun existeNombre(nom: String, id: Int): Boolean {
+        var q = ""
+        q = if (id == 0) {
+            "SELECT id FROM $TABLE where nombre = '$nom'"
+        } else {
+            "SELECT id FROM $TABLE where nombre = '$nom' AND WHERE id != $id"
+        }
+
         val conexion = this.readableDatabase
         var filas = 0
         try {
@@ -96,5 +102,18 @@ class BaseDatos(c: Context): SQLiteOpenHelper(c, DATABASE, null, VERSION) {
         val conexion = this.writableDatabase
         conexion.execSQL(q)
         conexion.close()
+    }
+
+    fun update(articulo: Articulo): Int {
+        val conexion = this.writableDatabase
+        val valores = ContentValues().apply {
+            put("NOMBRE", articulo.nombre)
+            put("PRECIO", articulo.precio)
+            put("STOCK", articulo.stock)
+        }
+
+        val update = conexion.update(TABLE, valores, "id = ?", arrayOf(articulo.id.toString()))
+        conexion.close()
+        return update
     }
 }

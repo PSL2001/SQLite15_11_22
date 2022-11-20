@@ -5,4 +5,4 @@ data class Articulo(
     var nombre: String,
     var precio: Float,
     var stock: Int
-)
+):java.io.Serializable

@@ -43,8 +43,15 @@ class MainActivity : AppCompatActivity() {
         }
         val layoutManager = LinearLayoutManager(this)
         binding.rcAticulos.layoutManager = layoutManager
-        adapter = ArticulosAdapter(lista, {onItemDelete(it)})
+        adapter = ArticulosAdapter(lista, {onItemDelete(it)}) { onItemUpdate(it) }
         binding.rcAticulos.adapter = adapter
+    }
+
+    private fun onItemUpdate(it: Articulo) {
+        val i = Intent(this, AddUpdateActivity::class.java).apply {
+            putExtra("ARTICULO", it)
+        }
+        startActivity(i)
     }
 
     private fun onItemDelete(position: Int) {
