@@ -32,7 +32,7 @@ class BaseDatos(c: Context): SQLiteOpenHelper(c, DATABASE, null, VERSION) {
     //Crear un registro en la base de datos
     fun crear(articulo: Articulo) : Long {
         val conexion = this.writableDatabase
-        val valores = ContentValues().apply {
+       val valores = ContentValues().apply {
             put("NOMBRE", articulo.nombre)
             put("PRECIO", articulo.precio)
             put("STOCK", articulo.stock)
