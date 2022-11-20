@@ -73,11 +73,10 @@ class BaseDatos(c: Context): SQLiteOpenHelper(c, DATABASE, null, VERSION) {
     }
 
     fun existeNombre(nom: String, id: Int): Boolean {
-        var q = ""
-        q = if (id == 0) {
+        val q = if (id == 0) {
             "SELECT id FROM $TABLE where nombre = '$nom'"
         } else {
-            "SELECT id FROM $TABLE where nombre = '$nom' AND WHERE id != $id"
+            "SELECT id FROM $TABLE where nombre = '$nom' AND id != '$id'"
         }
 
         val conexion = this.readableDatabase
