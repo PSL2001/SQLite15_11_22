@@ -72,5 +72,22 @@ class BaseDatos(c: Context): SQLiteOpenHelper(c, DATABASE, null, VERSION) {
         return lista
     }
 
+    fun existeNombre(nom: String): Boolean {
+        val q = "SELECT id FROM $TABLE where nombre = '$nom'"
+        val conexion = this.readableDatabase
+        var filas = 0
+        try {
+            //Abre el cursor
+            val cursor = conexion.rawQuery(q, null)
+            //Cojemos las filas
+            filas = cursor.count
+            //Cerramos el cursor
+            cursor.close()
+        }catch (e: Exception) {
+            e.printStackTrace()
+        }
+        conexion.close()
 
+        return filas != 0
+    }
 }

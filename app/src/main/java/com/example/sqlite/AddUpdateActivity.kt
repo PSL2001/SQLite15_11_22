@@ -38,20 +38,28 @@ class AddUpdateActivity : AppCompatActivity() {
 
         if (nombre.isEmpty()) {
             binding.etNombre.setError("Este campo no puede estar vacio!")
+            binding.etNombre.requestFocus()
             return
         }
 
         if (precio < 0.0f) {
             binding.etPrecio.setError("Este campo debe ser mayor que 0!")
+            binding.etPrecio.requestFocus()
             return
         }
 
         if (stock < 0) {
             binding.etStock.setError("Este campo debe ser mayor que 0!")
+            binding.etStock.requestFocus()
             return
         }
 
         //Comprobamos que nombre no exista
+        if (conexion.existeNombre(nombre)) {
+            binding.etNombre.setError("Este nombre ya existe!")
+            binding.etNombre.requestFocus()
+            return
+        }
         val articulo = Articulo(1, nombre, precio, stock)
         if (conexion.crear(articulo) > -1) {
             finish()
