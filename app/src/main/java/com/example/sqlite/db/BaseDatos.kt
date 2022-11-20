@@ -71,4 +71,6 @@ class BaseDatos(c: Context): SQLiteOpenHelper(c, DATABASE, null, VERSION) {
         conexion.close()
         return lista
     }
+
+
 }

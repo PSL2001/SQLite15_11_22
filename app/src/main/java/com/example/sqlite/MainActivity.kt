@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setRecycler() {
         lista = conexion.readAll()
+        binding.tvVacio.visibility = View.INVISIBLE
         if (lista.size == 0) {
             binding.tvVacio.visibility = View.VISIBLE
             return
@@ -44,5 +45,10 @@ class MainActivity : AppCompatActivity() {
         binding.rcAticulos.layoutManager = layoutManager
         adapter = ArticulosAdapter(lista)
         binding.rcAticulos.adapter = adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setRecycler()
     }
 }
